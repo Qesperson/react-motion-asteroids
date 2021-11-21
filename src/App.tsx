@@ -3,13 +3,16 @@ import { range, random } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import { motion } from 'framer-motion'
 
-import { screen } from './game/index'
+import { game, screen } from './game/index'
 
 import './App.css'
+import { Ship } from './components/index'
 
 function App() {
+    const { lives } = game
+
     const stars = React.useMemo(() => {
-        return range(100 - 5).map((i) => (
+        return range(100 - lives).map((i) => (
             <motion.div
                 style={{
                     position: 'absolute',
@@ -21,7 +24,7 @@ function App() {
                 }}
             />
         ))
-    }, [])
+    }, [lives])
 
     return (
         <div
@@ -49,6 +52,17 @@ function App() {
                 }}
             >
                 {stars}
+                {
+                    //Ship
+                    lives > 0 && (
+                        <Ship
+                            x={game.ship.x}
+                            y={game.ship.y}
+                            angle={game.ship.angle}
+                            radius={game.ship.radius}
+                        />
+                    )
+                }
             </motion.div>
         </div>
     )

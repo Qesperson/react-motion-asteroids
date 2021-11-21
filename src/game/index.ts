@@ -1,7 +1,8 @@
 import { range, random } from 'lodash'
 import { makeObservable, computed, observable } from 'mobx'
+import { Ship } from './ship'
 
-export const screen = {
+export var screen = {
     width: 600,
     height: 400
 }
@@ -11,6 +12,11 @@ export class Game {
         window.addEventListener('keypress', this.handleKeyPress)
         window.addEventListener('keyup', this.handleKeyUp)
         window.addEventListener('keydown', this.handleKeyDown)
+
+        this.ship = new Ship({
+            x: screen.width / 2,
+            y: screen.height / 2
+        })
     }
 
     /* ----------------------------------- User inputs ----------------------------- */
@@ -43,9 +49,14 @@ export class Game {
 	shots = 0
 
 	hits = 0
+
+    ship: Ship
+
 }
 
 
-makeObservable(Game, {})
+makeObservable(Game, {
 
-export const game = new Game()
+})
+
+export var game = new Game()
